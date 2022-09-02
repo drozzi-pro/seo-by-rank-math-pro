@@ -5,18 +5,18 @@
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '0e98ac802618be20b908adcf324390e4c30afd01',
-        'name' => 'mythemeshop/rank-math-pro',
+        'reference' => 'ff8af92e09b248bd3b2eb76d01d5a6c3d046b721',
+        'name' => 'rankmath/seo-by-rank-math-pro',
         'dev' => true,
     ),
     'versions' => array(
-        'mythemeshop/rank-math-pro' => array(
+        'rankmath/seo-by-rank-math-pro' => array(
             'pretty_version' => 'dev-develop',
             'version' => 'dev-develop',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '0e98ac802618be20b908adcf324390e4c30afd01',
+            'reference' => 'ff8af92e09b248bd3b2eb76d01d5a6c3d046b721',
             'dev_requirement' => false,
         ),
     ),
