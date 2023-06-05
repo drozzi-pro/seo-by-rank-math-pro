@@ -69,10 +69,22 @@ class Video_Provider extends Post_Type {
 		$index     = [];
 		for ( $page_counter = 0; $page_counter < $max_pages; $page_counter++ ) {
 			$current_page = ( $max_pages > 1 ) ? ( $page_counter + 1 ) : '';
-			$index[]      = [
-				'loc'     => Router::get_base_url( 'video-sitemap' . $current_page . '.xml' ),
-				'lastmod' => $all_dates[ $page_counter ][0]['post_modified_gmt'],
-			];
+			$video        = $all_dates[ $page_counter ][0];
+			$item         = $this->do_filter(
+				'sitemap/index/entry',
+				[
+					'loc'     => Router::get_base_url( 'video-sitemap' . $current_page . '.xml' ),
+					'lastmod' => $video['post_modified_gmt'],
+				],
+				'video',
+				$video,
+			);
+
+			if ( ! $item ) {
+				continue;
+			}
+
+			$index[] = $item;
 		}
 
 		return $index;
@@ -181,10 +193,6 @@ class Video_Provider extends Post_Type {
 			return false;
 		}
 
-		if ( 'post' !== $post->post_type ) {
-			$url['loc'] = trailingslashit( $url['loc'] );
-		}
-
 		$url['author'] = $post->post_author;
 		$url['videos'] = [];
 		foreach ( $schemas as $schema ) {
@@ -195,7 +203,7 @@ class Video_Provider extends Post_Type {
 				'publication_date' => ! empty( $schema['uploadDate'] ) ? Helper::replace_vars( $schema['uploadDate'], $post ) : '',
 				'content_loc'      => ! empty( $schema['contentUrl'] ) ? Helper::replace_vars( $schema['contentUrl'], $post ) : '',
 				'player_loc'       => ! empty( $schema['embedUrl'] ) ? Helper::replace_vars( $schema['embedUrl'], $post ) : '',
-				'duration'         => ! empty( $schema['duration'] ) ? Helper::duration_to_seconds( $schema['duration'] ) : '',
+				'duration'         => ! empty( $schema['duration'] ) ? Helper::duration_to_seconds( Helper::replace_vars( $schema['duration'], $post ) ) : '',
 				'tags'             => ! empty( $schema['metadata']['tags'] ) ? Helper::replace_vars( $schema['metadata']['tags'], $post ) : '',
 				'family_friendly'  => ! empty( $schema['isFamilyFriendly'] ) ? 'yes' : 'no',
 				'rating'           => ! empty( $schema['metadata']['rating'] ) ? $schema['metadata']['rating'] : '',

@@ -9,11 +9,11 @@
  *
  * @wordpress-plugin
  * Plugin Name:       Rank Math SEO PRO
- * Version:           3.0.29
+ * Version:           3.0.37
  * Plugin URI:        https://rankmath.com/wordpress/plugin/seo-suite/
  * Description:       Super-charge your website’s SEO with the Rank Math PRO options like Site Analytics, SEO Performance, Custom Schema Templates, News/Video Sitemaps, etc.
  * Author:            Rank Math
- * Author URI:        https://s.rankmath.com/pro
+ * Author URI:        https://rankmath.com/?utm_source=Plugin&utm_medium=Readme%20Author%20URI&utm_campaign=WP
  * License:           GPL-3.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       rank-math-pro
@@ -23,8 +23,6 @@
 use RankMath\Helper;
 use MyThemeShop\Helpers\Param;
 use MyThemeShop\Helpers\Conditional;
-
-defined( 'ABSPATH' ) || exit;
 
 add_filter( 'rank_math/admin/sensitive_data_encryption', '__return_false' );
 
@@ -66,6 +64,8 @@ add_action( 'init', function() {
      }, 10, 3 );
 } );
 
+defined( 'ABSPATH' ) || exit;
+
 /**
  * RankMath class.
  *
@@ -78,14 +78,14 @@ final class RankMathPro {
 	 *
 	 * @var string
 	 */
-	public $version = '3.0.29';
+	public $version = '3.0.37';
 
 	/**
 	 * Minimum version of Rank Math SEO.
 	 *
 	 * @var string
 	 */
-	public $rank_math_min_version = '1.0.107';
+	public $rank_math_min_version = '1.0.116';
 
 	/**
 	 * Holds various class instances
@@ -152,7 +152,7 @@ final class RankMathPro {
 	 */
 	public function setup() {
 		if ( ! $this->is_free_version_compatible() ) {
-			$this->messages[] = esc_html__( 'Please update Rank Math Free to the latest version first before activating the PRO version.', 'rank-math-pro' );
+			$this->messages[] = esc_html__( 'Please update Rank Math Free to the latest version first before using Rank Math PRO.', 'rank-math-pro' );
 			add_action( 'admin_notices', [ $this, 'activation_error' ] );
 			return false;
 		}
